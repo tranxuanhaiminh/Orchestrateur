@@ -1,3 +1,3 @@
 FROM openjdk:11-jre-slim
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY target/orches.jar orches.jar
+ENTRYPOINT ["java","-jar","/orches.jar"]
