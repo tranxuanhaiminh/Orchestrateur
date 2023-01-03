@@ -14,7 +14,7 @@ public class OrchestrateurApplication {
 
 	@RequestMapping("/")
 	public String home() {
-		String test1 = restTemplate.getForObject("http://localhost:8081", String.class);
+		String test1 = restTemplate.getForObject("http://172.0.0.2:8081", String.class);
 		return test1;
 	}
 	
