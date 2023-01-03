@@ -18,6 +18,11 @@ public class OrchestrateurApplication {
 		return test1;
 	}
 	
+	@RequestMapping("/test")
+	public String test() {
+		return "HelloWorld!";
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(OrchestrateurApplication.class, args);
 	}
