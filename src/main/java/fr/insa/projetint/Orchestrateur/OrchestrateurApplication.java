@@ -14,7 +14,7 @@ public class OrchestrateurApplication {
 
 	@RequestMapping("/")
 	public String home() {
-		String test1 = restTemplate.getForObject("http://host.docker.internal:8081", String.class);
+		String test1 = restTemplate.getForObject("http://172.18.0.7:8081", String.class);
 		return test1;
 	}
 	
