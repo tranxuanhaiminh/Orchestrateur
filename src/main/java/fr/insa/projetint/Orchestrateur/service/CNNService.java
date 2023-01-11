@@ -17,8 +17,9 @@ public class CNNService {
 	}
 	
 	public String helloWorld() {
-		String test1 = restTemplate.getForObject("http://localhost:8081", String.class);
-		return test1;
+		String test1 = restTemplate.getForObject("http://localhost:8081/a", String.class);
+		String res = restTemplate.getForObject("http://localhost:8081/" + test1, String.class);
+		return res;
 	}
 
 }
