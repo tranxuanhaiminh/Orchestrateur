@@ -1,9 +1,11 @@
 package fr.insa.projetint.Orchestrateur.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.web.reactive.function.client.WebClient;
 import fr.insa.projetint.Orchestrateur.model.Image;
 
 @Service
@@ -11,15 +13,18 @@ public class CNNService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	WebClient webClient = WebClient.create("http://localhost:8081");
+
 	
 	public String findAttribute(Image img) {
-		return img.getEncoded() + " attribute";
+		Image res = webClient.get().uri("/a").retrieve().bodyToMono(Image.class).block();
+		return res.getEncoded();
 	}
 	
 	public String helloWorld() {
-		String test1 = restTemplate.getForObject("http://localhost:8081/a", String.class);
-		String res = restTemplate.getForObject("http://localhost:8081/" + test1, String.class);
-		return res;
+		Image test = webClient.get().uri("/a").retrieve().bodyToMono(Image.class).block();
+		Image res = webClient.get().uri("/" + test.getEncoded()).retrieve().bodyToMono(Image.class).block();
+		return res.getEncoded();
 	}
 
 }
