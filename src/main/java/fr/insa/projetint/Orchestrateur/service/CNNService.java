@@ -17,8 +17,7 @@ public class CNNService {
 
 	
 	public String findAttribute(Image img) {
-		Image res = webClient.get().uri("/a").retrieve().bodyToMono(Image.class).block();
-		return res.getEncoded();
+		return webClient.get().uri("/receive").retrieve().bodyToMono(String.class).block();
 	}
 	
 	public String helloWorld() {
