@@ -6,10 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,20 +31,25 @@ public class MainController {
 	@Autowired
 	private SearchService searchService;
 
-	@GetMapping()
-	public String match(@RequestBody Image image) {
-		String imgEnc = this.cnnService.findAttribute(image);
-		return this.searchService.searchImg(imgEnc);
+	@GetMapping("/{img64}")
+	public List<String> match(@PathVariable("img64") String img64) {
+		String attributes = this.cnnService.findAttribute(img64);
+		return this.searchService.searchAllImg(attributes);
 	}
 	
 	@GetMapping("/match0")
 	public String match0() throws IOException {
 		String path = "./src/main/resources/images/000001.jpg";
-		return new ImageRessource(path).getEncStr();
+		String imgEnc = new ImageRessource(path).getEncStr();
+		String attributes = this.cnnService.findAttribute(imgEnc);
+		return this.searchService.searchImg(attributes);
 	}
 
 	@GetMapping("/match1")
-	public String match1() {
-		return this.searchService.helloWorld();
+	public ArrayList<ArrayList<String>> match1() throws IOException {
+		String path = "./src/main/resources/images/rostom.jpg";
+		String img64 = new ImageRessource(path).getEncStr();
+		String attributes = this.cnnService.findAttribute(img64);
+		return this.searchService.helloWorld(attributes);
 	}
 }

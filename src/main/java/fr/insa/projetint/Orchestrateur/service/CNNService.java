@@ -7,17 +7,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import fr.insa.projetint.Orchestrateur.model.Image;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CNNService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
-	WebClient webClient = WebClient.create("http://localhost:8081");
+	WebClient webClient = WebClient.create("http://localhost:8083");
 
 	
-	public String findAttribute(Image img) {
-		return webClient.get().uri("/receive").retrieve().bodyToMono(String.class).block();
+	public String findAttribute(String img64) {
+		String res = webClient.post()
+				.uri("/receive")
+				.header(HttpHeaders.CONTENT_TYPE,  MediaType.TEXT_PLAIN_VALUE)
+				.body(Mono.just(img64), String.class)
+				.retrieve()
+				.bodyToMono(String.class).block();
+		System.out.println(res);
+		return res;
 	}
 	
 	public String helloWorld() {

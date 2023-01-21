@@ -1,6 +1,8 @@
 package fr.insa.projetint.Orchestrateur.model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SearchRes {
 	private ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
@@ -18,7 +20,12 @@ public class SearchRes {
 	}
 	
 	public String getFirstImageName() {
-;		return res.get(0).get(1);
+		return res.get(0).get(1);
+	}
+	
+	public List<String> getAllImageName() {
+		List<String> ImgNameList = this.res.stream().map(arr -> arr.get(1)).collect(Collectors.toList());
+		return ImgNameList;
 	}
 
 }
